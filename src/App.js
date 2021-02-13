@@ -1,7 +1,8 @@
 import React from "react";
 import "./index.css";
 import Test from "./assets/Test.svg"
-import USA_Counties from "./assets/USA_Counties.svg";
+// import {ReactComponent as Counties} from "./assets/CountiesTest.svg";
+import Counties from "./components/Counties";
 
 class App extends React.Component {
   constructor(props) {
@@ -23,7 +24,7 @@ class App extends React.Component {
     const selectedCountiesPercentage = this.state.selectedCountiesPercentage;
     return (
       <div className="App">
-        <img src={USA_Counties} width='100%' height='100%' alt="map of US"></img>
+        < Counties />
         <h3>
           You have visited {selectedCountiesPercentage}% of the United States!
         </h3>
