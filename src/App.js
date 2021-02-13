@@ -1,7 +1,5 @@
 import React from "react";
 import "./index.css";
-import Test from "./assets/Test.svg"
-// import {ReactComponent as Counties} from "./assets/CountiesTest.svg";
 import SvgComponent from "./components/Counties";
 
 const d3 = require("d3");
