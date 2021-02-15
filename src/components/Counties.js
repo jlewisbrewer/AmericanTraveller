@@ -11,6 +11,7 @@ class SvgComponent extends React.Component {
         xmlns="http://www.w3.org/2000/svg"
         // {...props}
         onClick={this.props.onMouseClick}
+        onMouseOver={this.props.onMouseOver}
       >
         <g
           id="county-group"

@@ -12,9 +12,12 @@ body {
   margin-bottom: 100px;
 }
 
+h3, h2 {
+  color: white;
+}
+
 h3 {
   font-size: 48px;
-  color: white;
 }
 
 code {
@@ -24,4 +27,5 @@ code {
 
 path:hover:not(.State_Lines):not(.separator) {
   fill: blue;
+
 }

@@ -4,19 +4,29 @@ import SvgComponent from "./components/Counties";
 
 const d3 = require("d3");
 
-
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.counties = require("./data/counties.json");
     this.totalArea = 9589190;
     this.state = {
+      selectedCounty: this.counties[0],
       selectedCounties: [],
       selectedCountiesArea: 0,
       selectedCountiesPercentage: 0,
     };
 
     this.onMouseClick = this.onMouseClick.bind(this);
+    this.onMouseOver = this.onMouseOver.bind(this);
+  }
+
+  onMouseOver(e) {
+    let county = this.counties[e.target.id];
+    if (county) {
+      this.setState({
+        selectedCounty: county,
+      });
+    }
   }
 
   onMouseClick(e) {
@@ -24,43 +34,43 @@ class App extends React.Component {
 
     console.log(county);
     console.log(this.counties[county]);
-    let landArea = this.counties[county];
+    let landArea = this.counties[county].landarea;
 
     if (landArea) {
-
       if (this.state.selectedCounties.includes(county)) {
         // unfill it
         let paths = d3.select("#county-group").selectAll("#" + county);
         paths.style("fill", "#d0d0d0");
 
-        this.state.selectedCounties = this.state.selectedCounties.filter((value, ind, arr)=>{
-          return value !== county;
-        });
-        this.state.selectedCountiesArea -= this.counties[county]
+        this.state.selectedCounties = this.state.selectedCounties.filter(
+          (value, ind, arr) => {
+            return value !== county;
+          }
+        );
+        this.state.selectedCountiesArea -= this.counties[county].landarea;
         this.setState({
           selectedCountiesPercentage: this.calculateSelectedCountiesPercentage(),
         });
       } else {
         // fill it
         this.state.selectedCounties.push(county);
-        this.state.selectedCountiesArea += this.counties[county]   
+        this.state.selectedCountiesArea += this.counties[county].landarea;
         this.setState({
           selectedCountiesPercentage: this.calculateSelectedCountiesPercentage(),
-        });  
-        
-        console.log(this.state.selectedCounties);
-        console.log(this.state.selectedCountiesArea);
-        console.log(this.state.selectedCountiesPercentage);
+        });
+
         let paths = d3.select("#county-group").selectAll("#" + county);
 
         paths.style("fill", "blue");
-      
       }
     }
   }
 
   calculateSelectedCountiesPercentage() {
-    return Math.round((this.state.selectedCountiesArea / this.totalArea) * 10000) / 100;
+    return (
+      Math.round((this.state.selectedCountiesArea / this.totalArea) * 10000) /
+      100
+    );
   }
 
   componentDidMount() {
@@ -69,9 +79,11 @@ class App extends React.Component {
 
   render() {
     const selectedCountiesPercentage = this.state.selectedCountiesPercentage;
+    const selectedCounty = this.state.selectedCounty? this.state.selectedCounty.name + ', ' + this.state.selectedCounty.state : null;
     return (
       <div className="App">
-        < SvgComponent onMouseClick = {this.onMouseClick}/>
+        <SvgComponent onMouseClick={this.onMouseClick} onMouseOver={this.onMouseOver} />
+        <h2>{selectedCounty}</h2>
         <h3>
           You have visited {selectedCountiesPercentage}% of the United States!
         </h3>
