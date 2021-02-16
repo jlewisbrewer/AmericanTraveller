@@ -13351,5 +13351,10 @@
     "name": "Washington, D.C.",
     "state": "D.C.",
     "landarea": 68
+  },
+  "Hoonah_Angoon__AK": {
+    "name": "Hoonah Angoon Census Area",
+    "state": "Alaska",
+    "landarea": 28270
   }
 }

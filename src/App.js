@@ -9,7 +9,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.counties = require("./data/counties.json");
-    this.totalArea = 9589190;
+    this.totalArea = 9589190 + 28270;
     this.state = {
       selectedCounty: this.counties[0],
       selectedCounties: [],
