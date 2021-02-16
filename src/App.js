@@ -1,6 +1,7 @@
 import React from "react";
 import "./index.css";
 import SvgComponent from "./components/Counties";
+import ReactTooltip from "react-tooltip";
 
 const d3 = require("d3");
 
@@ -21,27 +22,45 @@ class App extends React.Component {
   }
 
   onMouseOver(e) {
-    let county = this.counties[e.target.id];
-    if (county) {
-      this.setState({
-        selectedCounty: county,
-      });
+    let target = e.target.id;
+    let county = this.counties[target];
+    try {
+      // let paths = d3.select("#county-group").selectAll("#" + target);
+      // paths.attr("data-tip", "test");
+      // console.log(county);
+      // if (county.name) {
+      //   paths.attr("data-for", "showCountyName");
+      // }
+      if (county) {
+        this.setState({
+          selectedCounty: county,
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 
   onMouseClick(e) {
     let county = e.target.id;
 
-    console.log(county);
-    console.log(this.counties[county]);
+    // console.log(county);
+    // console.log(this.counties[county]);
     try {
       let landArea = this.counties[county].landarea;
+      let paths = d3.select("#county-group").selectAll("#" + county);
 
       if (landArea) {
         if (this.state.selectedCounties.includes(county)) {
           // unfill it
-          let paths = d3.select("#county-group").selectAll("#" + county);
-          paths.style("fill", "#d0d0d0");
+          // let paths = d3.select("#county-group").selectAll("#" + county);
+          // paths.style("fill", "#d0d0d0");
+
+          // for (let p in paths._groups){
+          //   p.className = 'unselected';
+          // }
+
+          paths.attr("class", "unselected");
 
           this.state.selectedCounties = this.state.selectedCounties.filter(
             (value, ind, arr) => {
@@ -60,13 +79,15 @@ class App extends React.Component {
             selectedCountiesPercentage: this.calculateSelectedCountiesPercentage(),
           });
 
-          let paths = d3.select("#county-group").selectAll("#" + county);
-
-          paths.style("fill", "blue");
+          paths.attr("class", "selected");
+          // for(let p in paths._groups){
+          //   p.className = 'selected';
+          // }
+          // paths.style("fill", "blue");
         }
       }
-    } catch (TypeError) {
-      console.log("type error");
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -77,9 +98,7 @@ class App extends React.Component {
     );
   }
 
-  componentDidMount() {
-    console.log(this.counties["Washington__DC"]);
-  }
+  componentDidMount() {}
 
   render() {
     const selectedCountiesPercentage = this.state.selectedCountiesPercentage;
@@ -92,7 +111,9 @@ class App extends React.Component {
           onMouseClick={this.onMouseClick}
           onMouseOver={this.onMouseOver}
         />
-        <h2>{selectedCounty}</h2>
+        <ReactTooltip id="showCountyName" place="top" effect="solid">
+          {selectedCounty}
+        </ReactTooltip>
         <h3>
           You have visited {selectedCountiesPercentage}% of the United States!
         </h3>

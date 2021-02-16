@@ -12,17 +12,23 @@ body {
   margin-bottom: 100px;
 }
 
-h3, h2 {
-  color: white;
-}
-
 h3 {
   font-size: 48px;
+  color: white;
+
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.unselected {
+  fill: #d0d0d0;
+}
+
+.selected {
+  fill: blue;
 }
 
 path:hover:not(.State_Lines):not(.separator) {
