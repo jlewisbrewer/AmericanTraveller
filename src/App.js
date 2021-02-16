@@ -25,16 +25,12 @@ class App extends React.Component {
     let target = e.target.id;
     let county = this.counties[target];
     try {
-      // let paths = d3.select("#county-group").selectAll("#" + target);
-      // paths.attr("data-tip", "test");
-      // console.log(county);
-      // if (county.name) {
-      //   paths.attr("data-for", "showCountyName");
-      // }
       if (county) {
         this.setState({
           selectedCounty: county,
         });
+        let paths = d3.select("#county-group").selectAll("#" + target);
+        paths.attr("data-for", "showCountyName");
       }
     } catch (error) {
       console.log(error);
@@ -44,8 +40,6 @@ class App extends React.Component {
   onMouseClick(e) {
     let county = e.target.id;
 
-    // console.log(county);
-    // console.log(this.counties[county]);
     try {
       let landArea = this.counties[county].landarea;
       let paths = d3.select("#county-group").selectAll("#" + county);
@@ -53,13 +47,6 @@ class App extends React.Component {
       if (landArea) {
         if (this.state.selectedCounties.includes(county)) {
           // unfill it
-          // let paths = d3.select("#county-group").selectAll("#" + county);
-          // paths.style("fill", "#d0d0d0");
-
-          // for (let p in paths._groups){
-          //   p.className = 'unselected';
-          // }
-
           paths.attr("class", "unselected");
 
           this.state.selectedCounties = this.state.selectedCounties.filter(
@@ -80,10 +67,6 @@ class App extends React.Component {
           });
 
           paths.attr("class", "selected");
-          // for(let p in paths._groups){
-          //   p.className = 'selected';
-          // }
-          // paths.style("fill", "blue");
         }
       }
     } catch (error) {
@@ -111,7 +94,7 @@ class App extends React.Component {
           onMouseClick={this.onMouseClick}
           onMouseOver={this.onMouseOver}
         />
-        <ReactTooltip id="showCountyName" place="top" effect="solid">
+        <ReactTooltip id="showCountyName">
           {selectedCounty}
         </ReactTooltip>
         <h3>
