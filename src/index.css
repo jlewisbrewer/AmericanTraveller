@@ -27,5 +27,4 @@ code {
 
 path:hover:not(.State_Lines):not(.separator) {
   fill: blue;
-
 }
